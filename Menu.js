@@ -2,8 +2,8 @@ const sheetUI = SpreadsheetApp.getUi()
 const scProperties = PropertiesService.getScriptProperties()
 let curLogMode = scProperties.getProperty("logMode")
 
-const qcModes = { 
-  log: {code:"qcLogMode", name:"QC MODE", tColor:"#F2D0A7", bColor:"#7A6048" }, 
+const qcModes = {
+  log: {code:"qcLogMode", name:"QC MODE", tColor:"#F2D0A7", bColor:"#7A6048" },
   prep: {code:"prepLogMode", name:"PREP MODE", tColor:"#D5E5D0", bColor:"#58705A" }
 }
 
@@ -21,8 +21,8 @@ function changeLogMode(newMode) {
   // if (curLogMode == newMode) return;
   qcSheet = fullSheet.getActiveSheet();
   scProperties.setProperty("logMode", qcModes[newMode].code)
-  
-  let qcModeCell = qcSheet.getRange(`${COLS.qcMode.letter}1`)
+
+  let qcModeCell = getCell(`${COLS.qcMode.letter}1`)
   qcModeCell.setValue(qcModes[newMode].name)
   qcModeCell.setFontColor(qcModes[newMode].tColor)
   qcModeCell.setBackground(qcModes[newMode].bColor)
