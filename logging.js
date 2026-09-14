@@ -16,12 +16,9 @@ function initializeUnit(curCell) {
   fRunCell.setValue("PASS")
 
   let dupedCells = isDupedUnit(curCell.getValue())
-  if (dupedCells && (curLogMode == qcModes.prep.code)) {
-    dupeUnit(dupedCells, statusCell)
-  } else {
-    statusCell.setValue(STATUS.shelf)
-  }
+  if (dupedCells && (curLogMode == qcModes.prep.code)) { return dupeUnit(curCell, dupedCells, statusCell, curRow) }
 
+  statusCell.setValue(STATUS.shelf)
   timeUpdate(curRow)
 }
 
@@ -37,8 +34,26 @@ function deleteUnit(curCell, oldVal) {
   qcSheet.deleteRow(curRow)
 }
 
-function dupeUnit(dupedCells, statusCell) {
+function dupeUnit(curCell, dupedCells, statusCell, curRow) {
   statusCell.setValue(STATUS.ready)
+  timeUpdate(curRow)
+  dupedCells.push(curCell)
+
+  let entries = "ENTRIES: \n"
+
+  dupedCells.forEach(cell => {
+    let cellRow = cell.getRow()
+    let statusVal = getCell(`${COLS.status.letter}${cellRow}`).getValue()
+    let dateVal = getCell(`${COLS.date.letter}${cellRow}`).getValue()
+    let date = Utilities.formatDate(dateVal, Session.getScriptTimeZone(), "MM/dd/yy h:mm a")
+
+    let txt = `• ${date} → ${statusVal} \n`
+    entries += txt
+  })
+
+  dupedCells.forEach(cell => {
+    cell.setNote(entries)
+  })
 }
 
 function failUnit(curCell) {
