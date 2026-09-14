@@ -17,7 +17,7 @@ function initializeUnit(curCell) {
 
   let dupedCells = isDupedUnit(curCell.getValue())
   if (dupedCells && (curLogMode == qcModes.prep.code)) {
-    dupeUnit(statusCell)
+    dupeUnit(dupedCells, statusCell)
   } else {
     statusCell.setValue(STATUS.shelf)
   }
@@ -37,7 +37,7 @@ function deleteUnit(curCell, oldVal) {
   qcSheet.deleteRow(curRow)
 }
 
-function dupeUnit(statusCell) {
+function dupeUnit(dupedCells, statusCell) {
   statusCell.setValue(STATUS.ready)
 }
 
@@ -53,14 +53,14 @@ function failUnit(curCell) {
   let iRunCell = getCell(`${COLS.iRun.letter}${curRow}`)
   let iRunVal = iRunCell.getValue()
 
-  if (iRunVal === "FAIL") {
-    let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
-    let statusCell = getCell(`${COLS.status.letter}${curRow}`)
+  if (iRunVal !== "FAIL") return;
 
-    fRunCell.setValue("FAIL")
-    statusCell.setValue(STATUS.pending)
-    timeUpdate(curRow)
-  }
+  let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
+  let statusCell = getCell(`${COLS.status.letter}${curRow}`)
+
+  fRunCell.setValue("FAIL")
+  statusCell.setValue(STATUS.pending)
+  timeUpdate(curRow)
 }
 
 function shelveUnit(curCell) {
@@ -70,14 +70,11 @@ function shelveUnit(curCell) {
   let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
   let fRunVal = fRunCell.getValue()
 
-  if (isNull(fRunVal)) return;
+  if ((isNull(fRunVal)) || (fRunVal !== "PASS")) return;
 
-  if (fRunVal === "PASS") {
-    let statusCell = getCell(`${COLS.status.letter}${curRow}`)
-
-    statusCell.setValue(STATUS.shelf)
-    timeUpdate(curRow)
-  }
+  let statusCell = getCell(`${COLS.status.letter}${curRow}`)
+  statusCell.setValue(STATUS.shelf)
+  timeUpdate(curRow)
 }
 
 function lastUpdated(curCell) {
