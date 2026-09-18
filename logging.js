@@ -10,16 +10,16 @@ function initializeUnit(curCell) {
   let iRunCell = getCell(`${COLS.iRun.letter}${curRow}`)
   let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
   let statusCell = getCell(`${COLS.status.letter}${curRow}`)
+  let statVal = ((curLogMode == qcModes.prep.code) && STATUS.ready) || STATUS.shelf
 
   dateCell.setValue(new Date())
   iRunCell.setValue("PASS")
   fRunCell.setValue("PASS")
-
-  let dupedCells = isDupedUnit(curCell.getValue())
-  if (dupedCells && (curLogMode == qcModes.prep.code)) { return dupeUnit(curCell, dupedCells, statusCell, curRow) }
-
-  statusCell.setValue(STATUS.shelf)
   timeUpdate(curRow)
+  statusCell.setValue(statVal)
+
+  let dupedCells = isUnitDuped(curCell.getValue())
+  if (dupedCells) { dupeUnit(curCell, dupedCells) }
 }
 
 function deleteUnit(curCell, oldVal) {
@@ -34,9 +34,7 @@ function deleteUnit(curCell, oldVal) {
   qcSheet.deleteRow(curRow)
 }
 
-function dupeUnit(curCell, dupedCells, statusCell, curRow) {
-  statusCell.setValue(STATUS.ready)
-  timeUpdate(curRow)
+function dupeUnit(curCell, dupedCells) {
   dupedCells.push(curCell)
 
   let entries = "ENTRIES: \n"
