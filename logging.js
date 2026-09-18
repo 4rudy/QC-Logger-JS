@@ -31,7 +31,14 @@ function deleteUnit(curCell, oldVal) {
 
   if (isNull(dateVal) && isNull(oldVal)) return;
 
-  qcSheet.deleteRow(curRow)
+  let dupedCells = isUnitDuped(oldVal)
+  if (dupedCells) { deleteCellNotes(dupedCells) }
+
+  curSheet.deleteRow(curRow)
+}
+
+function deleteCellNotes(cells) {
+  cells.forEach(cell => cell.clearNote())
 }
 
 function dupeUnit(curCell, dupedCells) {
