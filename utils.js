@@ -1,13 +1,13 @@
 function getCell(cell) {
-  return qcSheet.getRange(cell) //getRange is the actual cell object
+  return curSheet.getRange(cell) //getRange is the actual cell object
 }
 
-function isDupedUnit(unitPID) {
-  let lastRow = qcSheet.getLastRow() - 1
+function isUnitDuped(unitPID) {
+  let lastRow = curSheet.getLastRow() - 1
   let unitPIDS = getCell(`B2:B${lastRow}`)
   let dupedCells = findMatch(unitPIDS, unitPID, true)
 
-  return (dupedCells.length>=1 && dupedCells) || false;
+  return (dupedCells.length >= 1 && dupedCells) || false;
 }
 
 function findMatch(searchRange, searchValue, findAll) {
