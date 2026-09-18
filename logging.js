@@ -52,9 +52,9 @@ function dupeUnit(curCell, dupedCells) {
     let cellRow = cell.getRow()
     let statusVal = getCell(`${COLS.status.letter}${cellRow}`).getValue()
     let dateVal = getCell(`${COLS.date.letter}${cellRow}`).getValue()
-    let date = Utilities.formatDate(dateVal, Session.getScriptTimeZone(), "MM/dd/yy h:mm a")
+    let date = Utilities.formatDate(dateVal, Session.getScriptTimeZone(), "MM/dd/yy")
 
-    let txt = `• ${date} → ${statusVal} \n`
+    let txt = `• [${date}] [R:${cellRow}] → ${statusVal} \n`
     entries += txt
   })
 
