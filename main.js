@@ -28,19 +28,23 @@ function onEdit(e) {
   if (!e || !e.range) return;
 
   let curCell = e.range
+  let curColumn = curCell.getColumn()
   curSheet = curCell.getSheet() || fullSheet.getActiveSheet();
 
   if (isNull(e.value)) {
-    deleteUnit(curCell, e.oldValue);
-  } else if (curCell.getColumn() == COLS.pid.num) {
-    initializeUnit(curCell);
-  } else if (curCell.getColumn() == COLS.iRun.num) {
-    failUnit(curCell)
-  } else if (curCell.getColumn() == COLS.status.num) {
-    lastUpdated(curCell)
-  } else if (curCell.getColumn() == COLS.failPoint.num) {
-    showFailures(curCell)
-  } else if (curCell.getColumn() == COLS.fRun.num) {
-    shelveUnit(curCell)
+    return deleteUnit(curCell, e.oldValue);
+  }
+
+  switch (curColumn) {
+    case COLS.pid.num:
+      return initializeUnit(curCell);
+    case COLS.iRun.num:
+      return failUnit(curCell)
+    case COLS.status.num:
+      return lastUpdated(curCell)
+    case COLS.failPoint.num:
+      return showFailures(curCell)
+    case COLS.fRun.num:
+      return shelveUnit(curCell)
   }
 }
