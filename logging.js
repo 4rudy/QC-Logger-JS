@@ -15,10 +15,12 @@ function initializeUnit(curCell) {
   dateCell.setValue(new Date())
   iRunCell.setValue("PASS")
   fRunCell.setValue("PASS")
-  timeUpdate(curRow)
   statusCell.setValue(statVal)
+  timeUpdate(curRow)
+  addUnit(curRow, curCell.getValue(), statVal)
 
   let dupedCells = isUnitDuped(curCell.getValue())
+  console.log(dupedCells)
   if (dupedCells) { dupeUnit(curCell, dupedCells) }
 }
 
@@ -43,22 +45,20 @@ function deleteCellNotes(cells) {
   cells.forEach(cell => cell.clearNote())
 }
 
-function dupeUnit(curCell, dupedCells) {
-  dupedCells.push(curCell)
-
+function dupeUnit(curCell, dupedUnits) {
   let entries = "ENTRIES: \n"
 
-  dupedCells.forEach(cell => {
-    let cellRow = cell.getRow()
-    let statusVal = getCell(`${COLS.status.letter}${cellRow}`).getValue()
-    let dateVal = getCell(`${COLS.date.letter}${cellRow}`).getValue()
-    let date = Utilities.formatDate(dateVal, Session.getScriptTimeZone(), "MM/dd/yy")
+  dupedUnits.forEach(unit => {
+    let unitRow = unit.row
+    let statusVal = unit.status
+    let date = Utilities.formatDate(unit.date, Session.getScriptTimeZone(), "MM/dd/yy")
+    let txt = `• [${date}] [R:${unitRow}] → ${statusVal} \n`
 
-    let txt = `• [${date}] [R:${cellRow}] → ${statusVal} \n`
     entries += txt
   })
 
-  dupedCells.forEach(cell => {
+  dupedUnits.forEach(unit => {
+    let cell = getCell(`${COLS.pid.letter}${unit.row}`)
     cell.setNote(entries)
   })
 }
@@ -110,7 +110,7 @@ function showFailures(curCell) {
   let headers = failureSheet.getRange("D2:R2")
   let failPoint = curCell.getValue()
 
-  let failPointCell = findMatch(headers, failPoint, false)
+  let failPointCell = findMatch(headers, failPoint)
   if (!failPointCell) return;
 
   let startRow = failPointCell.getRow() + 1

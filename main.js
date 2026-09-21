@@ -1,5 +1,6 @@
 let fullSheet = SpreadsheetApp.getActiveSpreadsheet()
 let curSheet = fullSheet.getActiveSheet();
+let allUnits =[]
 
 const COLS = {
   date: { letter: "A", num: 1 },
@@ -30,6 +31,7 @@ function onEdit(e) {
   let curCell = e.range
   let curColumn = curCell.getColumn()
   curSheet = curCell.getSheet() || fullSheet.getActiveSheet();
+  allUnits = getDataArray()
 
   if (isNull(e.value)) {
     return deleteUnit(curCell, e.oldValue);
