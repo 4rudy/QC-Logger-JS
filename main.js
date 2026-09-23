@@ -22,6 +22,7 @@ function onOpen() {
     .addItem("PREP MODE", "prepLogMode")
     .addItem("FIND ALL DUPES", "findAllDupes")
     .addItem("CLEAR ALL NOTES", "clearAllNotes")
+    .addItem("CAPITALIZE PIDS", "allCaps")
     .addToUi();
 
   changeLogMode("log")

@@ -45,8 +45,15 @@ function prepLogMode() {
 function clearAllNotes() {
   allUnits = getDataArray();
   allUnits.forEach(unit => {
-    console.log(unit.pid)
     let cell = getCell(`${COLS.pid.letter}${unit.row}`)
     cell.clearNote()
+  })
+}
+
+function allCaps() {
+  allUnits = getDataArray();
+  allUnits.forEach(unit => {
+    let cell = getCell(`${COLS.pid.letter}${unit.row}`)
+    cell.setValue(String(unit.pid).toUpperCase())
   })
 }
