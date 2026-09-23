@@ -1,6 +1,6 @@
 let fullSheet = SpreadsheetApp.getActiveSpreadsheet()
 let curSheet = fullSheet.getActiveSheet();
-let allUnits =[]
+let allUnits = []
 
 const COLS = {
   date: { letter: "A", num: 1 },
@@ -20,6 +20,8 @@ function onOpen() {
     // .addSeparator()
     .addItem("QC MODE", "qcLogMode")
     .addItem("PREP MODE", "prepLogMode")
+    .addItem("FIND ALL DUPES", "findAllDupes")
+    .addItem("CLEAR ALL NOTES", "clearAllNotes")
     .addToUi();
 
   changeLogMode("log")

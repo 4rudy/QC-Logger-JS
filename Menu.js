@@ -17,8 +17,6 @@ function notify(msg) {
 }
 
 function changeLogMode(newMode) {
-
-  // if (curLogMode == newMode) return;
   curSheet = fullSheet.getActiveSheet();
   scProperties.setProperty("logMode", qcModes[newMode].code)
 
@@ -34,4 +32,21 @@ function qcLogMode() {
 
 function prepLogMode() {
   changeLogMode("prep")
+}
+
+// function findAllDupes() {
+//   allUnits = getDataArray();
+//   allUnits.forEach(unit => {
+//     let dupedCells = isUnitDuped(unit.pid, unit.row)
+//     if (dupedCells) { console.log(unit.pid); dupeUnit(dupedCells) }
+//   })
+// }
+
+function clearAllNotes() {
+  allUnits = getDataArray();
+  allUnits.forEach(unit => {
+    console.log(unit.pid)
+    let cell = getCell(`${COLS.pid.letter}${unit.row}`)
+    cell.clearNote()
+  })
 }
