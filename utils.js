@@ -46,8 +46,8 @@ function getCell(cell) {
 }
 
 function isUnitDuped(unitPID) {
-  let dupedCells = allUnits.filter((unit) => unit.pid == unitPID)
-  return (dupedCells.length >= 1 && dupedCells) || false;
+  let dupedCells = allUnits.filter((unit) => (unit.pid == unitPID))
+  return (dupedCells.length > 1 && dupedCells) || false;
 }
 
 function findMatch(searchRange, searchValue) {

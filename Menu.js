@@ -34,13 +34,14 @@ function prepLogMode() {
   changeLogMode("prep")
 }
 
-// function findAllDupes() {
-//   allUnits = getDataArray();
-//   allUnits.forEach(unit => {
-//     let dupedCells = isUnitDuped(unit.pid, unit.row)
-//     if (dupedCells) { console.log(unit.pid); dupeUnit(dupedCells) }
-//   })
-// }
+function findAllDupes() {
+  allUnits = getDataArray();
+
+  allUnits.forEach(unit => {
+    let dupedCells = isUnitDuped(unit.pid)
+    if (dupedCells) { dupeUnit(dupedCells) }
+  })
+}
 
 function clearAllNotes() {
   allUnits = getDataArray();
