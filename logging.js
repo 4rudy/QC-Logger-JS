@@ -20,8 +20,7 @@ function initializeUnit(curCell) {
   addUnit(curRow, curCell.getValue(), statVal)
 
   let dupedCells = isUnitDuped(curCell.getValue())
-  console.log(dupedCells)
-  if (dupedCells) { dupeUnit(curCell, dupedCells) }
+  if (dupedCells) { dupeUnit(dupedCells) }
 }
 
 function deleteUnit(curCell, oldVal) {
@@ -45,19 +44,20 @@ function deleteCellNotes(cells) {
   cells.forEach(cell => cell.clearNote())
 }
 
-function dupeUnit(curCell, dupedUnits) {
-  let entries = "ENTRIES: \n"
-
+function dupeUnit(dupedUnits) {
   dupedUnits.forEach(unit => {
-    let unitRow = unit.row
-    let statusVal = unit.status
-    let date = Utilities.formatDate(unit.date, Session.getScriptTimeZone(), "MM/dd/yy")
-    let txt = `• [${date}] [R:${unitRow}] → ${statusVal} \n`
+    let entries = "ENTRIES: \n"
 
-    entries += txt
-  })
+    dupedUnits.forEach(otherUnit => {
+      if (unit.row !== otherUnit.row) {
+        let statusVal = otherUnit.status
+        let date = Utilities.formatDate(otherUnit.date, Session.getScriptTimeZone(), "MM/dd/yy")
+        let txt = `• [${date}] [R:${otherUnit.row}] → ${statusVal} \n`
 
-  dupedUnits.forEach(unit => {
+        entries += txt
+      }
+    })
+
     let cell = getCell(`${COLS.pid.letter}${unit.row}`)
     cell.setNote(entries)
   })
