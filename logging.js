@@ -6,14 +6,14 @@ function initializeUnit(curCell) {
   if (curCell.getColumn() !== COLS.pid.num) return;
 
   let curRow = curCell.getRow()
-  let curPID = curCell.getValue()
+  let curPID = String(curCell.getValue()).toUpperCase()
   let dateCell = getCell(`${COLS.date.letter}${curRow}`)
   let iRunCell = getCell(`${COLS.iRun.letter}${curRow}`)
   let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
   let statusCell = getCell(`${COLS.status.letter}${curRow}`)
   let statVal = ((curLogMode == qcModes.prep.code) && STATUS.ready) || STATUS.shelf
 
-  curCell.setValue(String(curPID).toUpperCase())
+  curCell.setValue(curPID)
   dateCell.setValue(new Date())
   iRunCell.setValue("PASS")
   fRunCell.setValue("PASS")
@@ -21,7 +21,7 @@ function initializeUnit(curCell) {
   timeUpdate(curRow)
   addUnit(curRow, curPID, statVal)
 
-  let dupedCells = isUnitDuped(curCell.getValue())
+  let dupedCells = isUnitDuped(curPID)
   if (dupedCells) { dupeUnit(dupedCells) }
 }
 
