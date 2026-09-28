@@ -29,8 +29,8 @@ function deleteUnit(curCell, oldVal) {
   if (curCell.getColumn() !== COLS.pid.num) return;
 
   let curRow = curCell.getRow()
-  let dateCell = getCell(`${COLS.date.letter}${curRow}`)
-  let dateVal = dateCell.getValue()
+  let unit = findUnit(curRow)
+  let dateVal = unit.date
 
   if (isNull(dateVal) && isNull(oldVal)) return;
 
@@ -69,15 +69,11 @@ function failUnit(curCell) {
   if (curCell.getColumn() !== COLS.iRun.num) return;
 
   let curRow = curCell.getRow()
-  let pidCell = getCell(`${COLS.pid.letter}${curRow}`)
-  let pidVal = pidCell.getValue()
+  let unit = findUnit(curRow)
+  let pidVal = unit.pid
+  let iRunVal = unit.iRun
 
-  if (isNull(pidVal)) return;
-
-  let iRunCell = getCell(`${COLS.iRun.letter}${curRow}`)
-  let iRunVal = iRunCell.getValue()
-
-  if (iRunVal !== "FAIL") return;
+  if ((isNull(pidVal)) || (iRunVal !== "FAIL")) return;
 
   let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
   let statusCell = getCell(`${COLS.status.letter}${curRow}`)
@@ -91,8 +87,8 @@ function shelveUnit(curCell) {
   if (curCell.getColumn() !== COLS.fRun.num) return;
 
   let curRow = curCell.getRow()
-  let fRunCell = getCell(`${COLS.fRun.letter}${curRow}`)
-  let fRunVal = fRunCell.getValue()
+  let unit = findUnit(curRow)
+  let fRunVal = unit.fRun
 
   if ((isNull(fRunVal)) || (fRunVal !== "PASS")) return;
 
