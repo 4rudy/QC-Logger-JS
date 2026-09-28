@@ -28,5 +28,5 @@
 
 // - ADD SUB MENUES
     // - STATS
-    // - ADMIN(?) DUPES/CAPS/NOTES
-    // - MODES
+    // - ADMIN(?) DUPES/CAPS/NOTES                  -- DONE
+    // - MODES                                      -- DONE

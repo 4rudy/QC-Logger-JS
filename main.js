@@ -15,14 +15,17 @@ const COLS = {
 }
 
 function onOpen() {
-  sheetUI.createMenu("Logger")
-    // .addItem("SCAN PID", "openGUI")
-    // .addSeparator()
-    .addItem("QC MODE", "qcLogMode")
-    .addItem("PREP MODE", "prepLogMode")
-    .addItem("FIND ALL DUPES", "findAllDupes")
-    .addItem("CLEAR ALL NOTES", "clearAllNotes")
-    .addItem("CAPITALIZE PIDS", "allCaps")
+  sheetUI.createMenu("Workbench")
+    .addSubMenu(sheetUI.createMenu("Mode")
+      .addItem("Listing Prep", "prepLogMode")
+      .addItem("Quality Check", "qcLogMode")
+    )
+    .addSeparator()
+    .addSubMenu(sheetUI.createMenu("Tools")
+      .addItem("Clear All Notes", "clearAllNotes")
+      .addItem("Find Dupes", "findAllDupes")
+      // .addItem("Capitalize PIDS", "allCaps")
+    )
     .addToUi();
 
   changeLogMode("log")
